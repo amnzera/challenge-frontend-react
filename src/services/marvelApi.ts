@@ -2,6 +2,7 @@ import axios from 'axios'
 import moment from 'moment'
 import CryptoJS from 'crypto-js'
 
+
 const ts = moment.now()
 const apikey = `${process.env.REACT_APP_MARVEL_PUBLIC}`
 const privateKey = `${process.env.REACT_APP_MARVEL_PRIVATE}`
@@ -23,6 +24,7 @@ export interface IApiData {
 
 export interface IHero {
   id: number,
+  comics: Array<any[]>,
   name: string,
   description: string,
   thumbnail: {
@@ -44,9 +46,14 @@ export const charactersList = (value? :any) => {
   }
 } 
 
+export var myHero: Array<any> = [];
 
 export const characterProfile = (id : number) => {
-  return marvelApi.get<IApiData>(`/v1/public/characters`);
+  return marvelApi.get<IApiData>(`/v1/public/characters/${id}`);
 }
   
-
+export const saveHero = (hero : IHero) => {
+  //myHero.indexOf()
+  myHero.push(hero);
+  console.log(myHero);
+}
