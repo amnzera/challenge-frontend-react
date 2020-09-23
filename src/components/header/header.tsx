@@ -8,7 +8,7 @@ function Header() {
   return (
       <header>
       <nav className={header.nav}>
-          <Link to="/"><img alt="stack overflow" src={logoImg}></img></Link>
+          <Link  to="/"><img className={header.logo} alt="stack overflow" src={logoImg}></img></Link>
           <Link to="/favorites" className={header.btnTeam}> <span style={{marginRight: "5px"}}>Your Team</span> <img alt="stack overflow" src={peopleImg}></img></Link>
       </nav>
       </header>

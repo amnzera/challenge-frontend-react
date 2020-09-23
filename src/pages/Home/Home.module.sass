@@ -1,7 +1,11 @@
 .home 
     background-color: #E5E5E5
 .main
-    padding: 50px 213px 213px 213px
+    padding: 114px 215px 229px 215px
+
+@media (max-width: 700px)
+    .main
+        padding: 114px 15% 229px 15%
 
 .flexGrid
     display: flex
@@ -9,7 +13,9 @@
     flex-wrap: wrap
 
 .flexGrid .col 
-  width: 22%
+    width: 22%
+    justify-content: center
+    display: flex
 
 @media (max-width: 1600px)
     .flexGrid .col

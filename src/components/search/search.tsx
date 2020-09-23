@@ -12,7 +12,7 @@ function Search(props: any) {
     <Background>
       <div className={SearchStyle.banner}>
         <div className={SearchStyle.bannerDescription}>Explore the most powerful characters in Marvel</div>
-        <div style={{ display: "flex" }}>
+        <div className={SearchStyle.inputBox}>
           <input onChange={(e) => setSearch(e.target.value)} className={SearchStyle.fieldSearch} placeholder="Type in a characher name"></input>
           <button type='button' onClick={() => props.handleClick(searchValue)} className={SearchStyle.btnSearch} ><img alt="stack overflow" src={lupa}></img></button>
         </div>

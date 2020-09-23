@@ -53,7 +53,6 @@ export const characterProfile = (id : number) => {
 }
   
 export const saveHero = (hero : IHero) => {
-  //myHero.indexOf()
-  myHero.push(hero);
-  console.log(myHero);
+    myHero.push(hero);
+    console.log(myHero);
 }

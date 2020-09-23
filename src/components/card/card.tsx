@@ -7,11 +7,12 @@ function Card(props: any) {
 
   return (
     <section className={CardStyle.main}>
-      <Link to={`/profile/${props.id}`} style={{ textDecoration: "none" }}>
+      <Link to={`/profile/${props.id}`} style={{ textDecoration: "none" , height: '198px' }}>
         <img className={CardStyle.img} src={props.img} alt="Hero" ></img>
       </Link>
 
       <button type="button" onClick={() => props.handleFavorite(props.obj)} className={CardStyle.addHero}> <img src={peopleAdd}></img> </button>
+      
       <Link to={`/profile/${props.id}`} style={{ textDecoration: "none" }}>
       <div className={CardStyle.Carddescription}>
         <span className={CardStyle.nameHero}>
