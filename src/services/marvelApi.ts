@@ -55,13 +55,11 @@ export interface Ithumbnail {
   path: string,
 };
 
-export const charactersList = (value? :any) => {
-  if(value){
-    return marvelApi.get<IApiData>(`/v1/public/characters?name=${value}`);
-  } else {
-    return marvelApi.get<IApiData>(`/v1/public/characters`);
-  }
-} 
+export const charactersList = (value?: any, pageNumber?: number) => {
+  console.log('pageNumber' + pageNumber)
+  let uri = value ? `/v1/public/characters?name=${value}&offset=${pageNumber}` : `/v1/public/characters?offset=${pageNumber}`;
+  return marvelApi.get<IApiData>(uri);
+};
 
 export let myHero: Array<any> = [];
 

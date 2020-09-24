@@ -12,22 +12,23 @@ import 'react-toastify/dist/ReactToastify.css';
 const Home = () => {
 
   const notify = () => {
-    console.log('Chamando')
     toast.success("Hero successfully added!", {
       position: toast.POSITION.BOTTOM_CENTER
     });
   };
 
   const [heroes, setHeroes] = useState<IHero[]>([]);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [pageNumber, setPage] = useState(1)
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [pageNumber, setPage] = useState(20);
+  const [loading, setLoading] = useState(false);
 
   const getCharacters = async () => {
-
-    charactersList(searchValue).then(response => {
-      setHeroes(response.data.data.results)
-    });
-
+    setLoading(true);
+    charactersList(searchValue, pageNumber)
+      .then((response) => {
+        setHeroes([...heroes, ...response.data.data.results])
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -38,23 +39,27 @@ const Home = () => {
   const handleClick = (value: string) => {
     setHeroes([]);
     setSearchValue(value);
-
   }
 
   const handleFavorite = (hero: IHero) => {
-    //console.log(hero)
     saveHero(hero);
     notify();
-
   }
-
-
-  const observer = useRef()
-  const lastHeroElementRef = useCallback(() => {
-    //if(observer.current) observer.current.disconnect()
-    console.log('teste')
-    //setPage(pageNumber + 1)
-  }, [pageNumber]
+  
+  const observer = useRef<any>(null);
+  const lastHeroElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage(pageNumber + 20);
+          getCharacters()
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, pageNumber]
   );
 
   return (
@@ -68,17 +73,9 @@ const Home = () => {
             if (heroes.length === index + 1) {
 
               return (
-                <>
-                <div>
-                  teste
-                  {heroes.length}<br></br>
-                  {index}
-                  {heroes.length === index + 1}
-                </div>
                 <div className={HomeStyle.col} key={hero.id} ref={lastHeroElementRef}>
                   <Card handleFavorite={handleFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
                 </div>
-                </>
               )
             } else {
               return (
