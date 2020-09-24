@@ -37,7 +37,7 @@ const Favorites: React.FC = () => {
             <section className={FavoriteStyle.cardSection}>
               {myHero.map(hero => (
                 <div className={FavoriteStyle.col} key={hero.id}>
-                  <Card removeFavorite={removeFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
+                  <Card favorited handleFavorite={removeFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
                 </div>
               ))}
             </section>
