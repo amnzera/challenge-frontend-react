@@ -5,11 +5,13 @@ import Home from '../pages/Home/';
 import Favorites from '../pages/Favorites/';
 import Profile from '../pages/Profile/';
 import Header from '../components/header/header';
+import { ToastContainer } from 'react-toastify';
 
 const Router = () => {
   return (
     <BrowserRouter>
-    <Header />
+      <ToastContainer />
+      <Header />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/favorites" exact component={Favorites} />

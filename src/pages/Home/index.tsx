@@ -13,7 +13,7 @@ const Home = () => {
 
   const notify = () => {
     console.log('Chamando')
-    toast.success("Success Notification !", {
+    toast.success("Hero successfully added!", {
       position: toast.POSITION.BOTTOM_CENTER
     });
   };
@@ -53,11 +53,9 @@ const Home = () => {
   const lastHeroElementRef = useCallback(() => {
     //if(observer.current) observer.current.disconnect()
     console.log('teste')
-    setPage(pageNumber + 1)
+    //setPage(pageNumber + 1)
   }, [pageNumber]
   );
-
-
 
   return (
     <main className={HomeStyle.home}>
