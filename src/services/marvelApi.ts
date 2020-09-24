@@ -65,6 +65,10 @@ export const charactersList = (value? :any) => {
 
 export let myHero: Array<any> = [];
 
+export const heroByID = (heroId?: number) => {
+    return marvelApi.get<IApiData>(`/v1/public/characters/${heroId}`);
+} 
+
 export const characterProfile = (id : number) => {
   return marvelApi.get(`/v1/public/characters/${id}/comics?&limit=5`);
 }
