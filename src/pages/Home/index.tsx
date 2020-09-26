@@ -19,10 +19,16 @@ const Home = () => {
     page = 0;
   }, [searchValue])
 
-  const notify = () => {
-    toast.success("Hero successfully added!", {
-      position: toast.POSITION.BOTTOM_CENTER
-    });
+  const notify = (err?: string) => {
+    if(err) {
+      toast.error(err, {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    } else {
+      toast.success("Hero successfully added!", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+    }
   };
 
   const getCharacters = async () => {
@@ -38,8 +44,11 @@ const Home = () => {
   }
 
   const handleFavorite = (hero: IHero) => {
-    saveHero(hero);
-    notify();
+    saveHero(hero)
+      .then(resp => notify())
+      .catch(err => notify(err));
+
+    
   }
 
   const loadFunc = (e: any) => {

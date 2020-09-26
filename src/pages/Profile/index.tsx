@@ -14,13 +14,12 @@ const Profile: React.FC = (props: any) => {
 
   //const { id } = useParams();
   useEffect(() => {
-
-    getHero(props.match.params.id)
+    getHero()
     getProfile(props.match.params.id)
 
   }, [])
 
-  const getHero = (id: number) => {
+  const getHero = () => {
     heroByID(props.match.params.id).then((response) => {
       setHero(response.data.data.results)
     })

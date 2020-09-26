@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Background from '../../components/background/background';
 import Card from '../../components/card/card';
 import FavoriteStyle from './Favorite.module.sass';
-import { IHero, myHero } from '../../services/marvelApi';
+import { deleteHero, IHero, myHero } from '../../services/marvelApi';
 import Footer from '../../components/footer/footer';
 
 
@@ -13,6 +13,9 @@ const Favorites: React.FC = () => {
   }, [])
 
   const removeFavorite = (hero: IHero) => {
+    deleteHero(hero).then(r => {
+      console.log('Retorno,' , r);
+    })
   }
   if (myHero.length === 0) {
     return (

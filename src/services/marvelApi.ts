@@ -61,7 +61,7 @@ export const charactersList = (value?: any, pageNumber?: number) => {
   return marvelApi.get<IApiData>(uri);
 };
 
-export let myHero: Array<any> = [];
+
 
 export const heroByID = (heroId?: number) => {
     return marvelApi.get<IApiData>(`/v1/public/characters/${heroId}`);
@@ -70,8 +70,27 @@ export const heroByID = (heroId?: number) => {
 export const characterProfile = (id : number) => {
   return marvelApi.get(`/v1/public/characters/${id}/comics?&limit=5`);
 }
+
+export let myHero: Array<any> = [];
+
   
 export const saveHero = (hero : IHero) => {
-    myHero.push(hero);
-    console.log(myHero);
+  return new Promise((resolve,reject) => {
+    resolve(myHero.push(hero))
+    reject( 'This not possible record a hero' )
+  })
+    
+}
+
+export const deleteHero = (hero : IHero) => {
+  return new Promise((resolve,reject) => {
+    resolve( 
+      myHero.forEach((response, index) => {
+        if (response.id === hero.id){
+          delete myHero[index]
+        }
+      })
+    )
+    //myHero.push(hero);
+  })
 }
