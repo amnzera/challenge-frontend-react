@@ -53,7 +53,7 @@ const Home = () => {
       <section className={HomeStyle.main}>
         <div className={HomeStyle.flexGrid}>
 
-          {heroes.map((hero, index) => {
+          {heroes.map((hero) => {
             return (
               <div className={HomeStyle.col} key={hero.id}>
                 <Card handleFavorite={handleFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
