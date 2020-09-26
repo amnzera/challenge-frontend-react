@@ -6,10 +6,18 @@ import { charactersList, IHero, saveHero } from '../../services/marvelApi';
 import HomeStyle from './Home.module.sass';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import InfiniteScroll from 'react-infinite-scroller';
 
 
-
+let page = 0;
 const Home = () => {
+  const [heroes, setHeroes] = useState<IHero[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [pageNumber, setPage] = useState(20);
+
+  useEffect(() => {
+    page = 0;
+  }, [searchValue])
 
   const notify = () => {
     toast.success("Hero successfully added!", {
@@ -17,24 +25,12 @@ const Home = () => {
     });
   };
 
-  const [heroes, setHeroes] = useState<IHero[]>([]);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [pageNumber, setPage] = useState(20);
-  const [loading, setLoading] = useState(false);
-
   const getCharacters = async () => {
-    setLoading(true);
-    charactersList(searchValue, pageNumber)
+    charactersList(searchValue, page)
       .then((response) => {
         setHeroes([...heroes, ...response.data.data.results])
       })
-      .finally(() => setLoading(false));
   };
-
-  useEffect(() => {
-    getCharacters()
-  }, [searchValue])
-
 
   const handleClick = (value: string) => {
     setHeroes([]);
@@ -45,22 +41,11 @@ const Home = () => {
     saveHero(hero);
     notify();
   }
-  
-  const observer = useRef<any>(null);
-  const lastHeroElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          setPage(pageNumber + 20);
-          getCharacters()
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, pageNumber]
-  );
+
+  const loadFunc = (e: any) => {
+    getCharacters()
+    page = page + 20;
+  }
 
   return (
     <main className={HomeStyle.home}>
@@ -69,23 +54,20 @@ const Home = () => {
         <div className={HomeStyle.flexGrid}>
 
           {heroes.map((hero, index) => {
-
-            if (heroes.length === index + 1) {
-
-              return (
-                <div className={HomeStyle.col} key={hero.id} ref={lastHeroElementRef}>
-                  <Card handleFavorite={handleFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
-                </div>
-              )
-            } else {
-              return (
-                <div className={HomeStyle.col} key={hero.id}>
-                  <Card handleFavorite={handleFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
-                </div>
-              )
-            }
+            return (
+              <div className={HomeStyle.col} key={hero.id}>
+                <Card handleFavorite={handleFavorite} obj={hero} id={hero.id} name={hero.name} img={hero.thumbnail.path + '.' + hero.thumbnail.extension} description={hero.description} />
+              </div>
+            )
 
           })}
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadFunc}
+            hasMore={true || false}
+            loader={<div className="loader" key={0}>Loading ...</div>}>
+          </InfiniteScroll>
+
 
         </div>
       </section>

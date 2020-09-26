@@ -41,7 +41,8 @@ const Profile: React.FC = (props: any) => {
           <section className={ProfileStyle.cardSection}>
 
             {hero.map(hero => (
-              <div key={hero.id} className={ProfileStyle.cardLarge}>
+              
+              <div key={hero.id} className={ `${ProfileStyle.cardLarge} ${ProfileStyle.top}` } >
                 <img className={ProfileStyle.CL__imgHeader} src={hero.thumbnail.path + '.' + hero.thumbnail.extension}></img>
                 <div className={ProfileStyle.CL__section}>
                   <div className={ProfileStyle.CL__title}>
